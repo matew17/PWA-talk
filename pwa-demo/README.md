@@ -16,7 +16,7 @@
 ## Add workbox configuration to vite.config.ts
 
 1. First thing to do is to import viteplugin `import { VitePWA } from "vite-plugin-pwa";`
-1. Add it inside of the plugins array:
+2. Add it inside of the plugins array:
 
 ```javascript
   plugins: [
@@ -27,100 +27,102 @@
   ]
 ```
 
-1. Add all necessary configuration
+3. Add all necessary configuration
 
 ```javascript
-  plugins: [
-    react(),
-    VitePWA({
-      includeAssets: ["public/*"], // to add all images
-      strategies: "generateSW",
-      registerType: "autoUpdate",
-      mode: "development", // only for dev mode, remove this later
-      workbox: { // workbox config to do cache
-        globPatterns: ["**/*.{js,jsx,css,html,png,svg,woff2,json}"], // cache all files
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/api\.open-meteo.com\/v1/, // cache for api calls when offline.
-            handler: "StaleWhileRevalidate",
-            method: "GET",
-            options: {
-              cacheName: "api-cache",
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
-              },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
+plugins: [
+  react(),
+  VitePWA({
+    includeAssets: ["public/*"], // to add all images
+    strategies: "generateSW",
+    registerType: "autoUpdate",
+    mode: "development", // only for dev mode, remove this later
+    workbox: {
+      // workbox config to do cache
+      globPatterns: ["**/*.{js,jsx,css,html,png,svg,woff2,json}"], // cache all files
+      runtimeCaching: [
+        {
+          urlPattern: /^https:\/\/api\.open-meteo.com\/v1/, // cache for api calls when offline.
+          handler: "StaleWhileRevalidate",
+          method: "GET",
+          options: {
+            cacheName: "api-cache",
+            expiration: {
+              maxEntries: 10,
+              maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+            },
+            cacheableResponse: {
+              statuses: [0, 200],
             },
           },
-        ],
-      },
-      manifest: { // same as manifest.json
-        name: "Softserve's weather app",
-        short_name: "WApp",
-        description: "A demo app for softserve's first ui commmunity gathering",
-        theme_color: "#2196f3",
-        background_color: "#2196f3",
-        display: "standalone",
-        scope: "/",
-        start_url: "/",
-        orientation: "portrait",
-        icons: [
-          {
-            src: "images/icons/icon-72x72.png",
-            sizes: "72x72",
-            type: "image/png",
-          },
-          {
-            src: "images/icons/icon-96x96.png",
-            sizes: "96x96",
-            type: "image/png",
-          },
-          {
-            src: "images/icons/icon-128x128.png",
-            sizes: "128x128",
-            type: "image/png",
-          },
-          {
-            src: "images/icons/icon-144x144.png",
-            sizes: "144x144",
-            type: "image/png",
-          },
-          {
-            src: "images/icons/icon-152x152.png",
-            sizes: "152x152",
-            type: "image/png",
-          },
-          {
-            src: "images/icons/icon-192x192.png",
-            sizes: "192x192",
-            type: "image/png",
-          },
-          {
-            src: "images/icons/icon-384x384.png",
-            sizes: "384x384",
-            type: "image/png",
-          },
-          {
-            src: "images/icons/icon-512x512.png",
-            sizes: "512x512",
-            type: "image/png",
-          },
-          {
-            src: "images/icons/icon-512.maskable.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "any maskable",
-          },
-        ],
-      },
-    })
-  ]
+        },
+      ],
+    },
+    manifest: {
+      // same as manifest.json
+      name: "Softserve's weather app",
+      short_name: "WApp",
+      description: "A demo app for softserve's first ui commmunity gathering",
+      theme_color: "#2196f3",
+      background_color: "#2196f3",
+      display: "standalone",
+      scope: "/",
+      start_url: "/",
+      orientation: "portrait",
+      icons: [
+        {
+          src: "images/icons/icon-72x72.png",
+          sizes: "72x72",
+          type: "image/png",
+        },
+        {
+          src: "images/icons/icon-96x96.png",
+          sizes: "96x96",
+          type: "image/png",
+        },
+        {
+          src: "images/icons/icon-128x128.png",
+          sizes: "128x128",
+          type: "image/png",
+        },
+        {
+          src: "images/icons/icon-144x144.png",
+          sizes: "144x144",
+          type: "image/png",
+        },
+        {
+          src: "images/icons/icon-152x152.png",
+          sizes: "152x152",
+          type: "image/png",
+        },
+        {
+          src: "images/icons/icon-192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+        },
+        {
+          src: "images/icons/icon-384x384.png",
+          sizes: "384x384",
+          type: "image/png",
+        },
+        {
+          src: "images/icons/icon-512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+        },
+        {
+          src: "images/icons/icon-512.maskable.png",
+          sizes: "512x512",
+          type: "image/png",
+          purpose: "any maskable",
+        },
+      ],
+    },
+  }),
+];
 ```
 
-1. For the runtimeCaching, make sure you replace the URL with the API URL you will be hitting, so the api is cached.
+4. For the runtimeCaching, make sure you replace the URL with the API URL you will be hitting, so the api is cached.
 
 ## Test your PWA and check google Lighthouse
 
