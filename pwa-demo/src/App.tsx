@@ -38,9 +38,14 @@ function App() {
             <h1>Temperatura Actual:</h1>
 
             <h2>
-              {Number(temperatureInfo?.current?.temperature_2m).toFixed()}
+              {temperatureInfo?.current?.temperature_2m}
               {temperatureInfo?.current_units?.temperature_2m}
             </h2>
+
+            <h3>
+              {temperatureInfo?.current?.wind_speed_10m}
+              {temperatureInfo?.current_units?.wind_speed_10m}
+            </h3>
           </>
         )}
       </section>
