@@ -1,0 +1,49 @@
+.weatherContainer {
+  height: calc(100% - 100px);
+  display: flex;
+  flex-flow: column;
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+
+.weatherContainerDay {
+  background: linear-gradient(#2f5af4, #0fa2ab);
+}
+
+.weatherContainerNigth {
+  background: #1d2837;
+}
+
+.weatherHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px;
+  font-weight: 300;
+}
+
+.weatherIcon {
+  width: 144px;
+  height: 144px;
+  align-self: center;
+  margin-top: 90px;
+}
+
+.weatherIcon > img {
+  width: 100%;
+}
+
+.weatherTemperature {
+  font-weight: 700;
+  font-size: 50px;
+  align-self: center;
+}
+
+.weatherChart {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

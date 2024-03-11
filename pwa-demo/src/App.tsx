@@ -1,55 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import styles from "./App.module.css";
 
-import "./App.css";
-import { apiUrl } from "./config";
+import { Weather } from "./components/Weather.component";
 
 function App() {
-  const [temperatureInfo, setTemperatureInfo] = useState<any | null>(null);
-
-  useEffect(() => {
-    fetch(
-      `${apiUrl}?latitude=6.1448792&longitude=-75.3947176&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setTemperatureInfo(data);
-      });
-  }, []);
-
   return (
-    <>
-      <section
-        style={{
-          background: "#226ba3",
-          color: "white",
-          height: "100vh",
-          width: "100%",
-          display: "flex",
-          padding: "24px",
-          justifyContent: "center",
-          alignItems: "center",
-          flexFlow: "column",
-          fontSize: "3em",
-        }}
-      >
-        {temperatureInfo?.current?.temperature_2m && (
-          <>
-            <h1>Temperatura Actual:</h1>
-
-            <h2>
-              {temperatureInfo?.current?.temperature_2m}
-              {temperatureInfo?.current_units?.temperature_2m}
-            </h2>
-
-            <h3>
-              {temperatureInfo?.current?.wind_speed_10m}
-              {temperatureInfo?.current_units?.wind_speed_10m}
-            </h3>
-          </>
-        )}
-      </section>
-    </>
+    <section className={styles.appContainer}>
+      <Weather />
+    </section>
   );
 }
 

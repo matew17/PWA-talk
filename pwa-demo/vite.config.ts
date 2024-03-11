@@ -22,7 +22,22 @@ export default defineConfig({
             handler: "StaleWhileRevalidate",
             method: "GET",
             options: {
-              cacheName: "api-cache",
+              cacheName: "api-open-meteo",
+              expiration: {
+                maxEntries: 10,
+                maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            urlPattern: /^https:\/\/api\.bigdatacloud.net\/data/,
+            handler: "StaleWhileRevalidate",
+            method: "GET",
+            options: {
+              cacheName: "api-bigdatacloud",
               expiration: {
                 maxEntries: 10,
                 maxAgeSeconds: 60 * 60 * 24 * 365, // <== 365 days
