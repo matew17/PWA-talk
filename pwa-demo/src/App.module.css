@@ -3,3 +3,9 @@
   margin: 50px auto;
   height: 100%;
 }
+
+@media screen and (width < 430px) {
+  .appContainer {
+    margin: 0 auto;
+  }
+}
