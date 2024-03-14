@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Weather } from "../models/Weather.models";
 import { useGetGeoInformation } from "./useGetGeoInformation";
 import { weatherApiBaseURL } from "../config";
+import { buildCoordinates } from "../utils/buildCoordinates";
 
 export const useGetWeather = () => {
   const [temperatureInfo, setTemperatureInfo] = useState<Weather | null>(null);
@@ -12,12 +13,9 @@ export const useGetWeather = () => {
       return;
     }
 
-    const url = new URL("/v1/forecast", weatherApiBaseURL);
+    const { latitude, longitude } = buildCoordinates(geoInformation);
 
-    const latitude =
-      geoInformation?.coords?.latitude?.toString() ?? "6.1448792";
-    const longitude =
-      geoInformation?.coords?.longitude?.toString() ?? "-75.3947176";
+    const url = new URL("/v1/forecast", weatherApiBaseURL);
 
     url.searchParams.append("latitude", latitude);
     url.searchParams.append("longitude", longitude);
@@ -32,7 +30,7 @@ export const useGetWeather = () => {
       .then((data) => {
         setTemperatureInfo(data);
       });
-  }, [geoInformation?.coords, geoinfoLoading]);
+  }, [geoInformation, geoinfoLoading]);
 
   return { temperatureInfo };
 };

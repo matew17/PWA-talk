@@ -9,6 +9,15 @@ export const useGetGeoInformation = () => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (data) => {
+        // Set last lat lon when online
+        if (navigator.onLine) {
+          localStorage.setItem("lastLatitude", data.coords.latitude.toString());
+          localStorage.setItem(
+            "lastLongitude",
+            data.coords.longitude.toString()
+          );
+        }
+
         setGeoInformation(data);
         setGeoinfoLoading(false);
       },

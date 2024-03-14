@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useGetGeoInformation } from "./useGetGeoInformation";
 import { reverseGeocodeApiBaseURL } from "../config";
 import { ReverseGeocode } from "../models/ReverseGeocode.models";
+import { buildCoordinates } from "../utils/buildCoordinates";
 
 export const useGetReverseGeoCode = () => {
   const { geoInformation, geoinfoLoading } = useGetGeoInformation();
@@ -15,15 +16,12 @@ export const useGetReverseGeoCode = () => {
       return;
     }
 
+    const { latitude, longitude } = buildCoordinates(geoInformation);
+
     const url = new URL(
       "/data/reverse-geocode-client",
       reverseGeocodeApiBaseURL
     );
-
-    const latitude =
-      geoInformation?.coords?.latitude?.toString() ?? "6.1448792";
-    const longitude =
-      geoInformation?.coords?.longitude?.toString() ?? "-75.3947176";
 
     url.searchParams.append("latitude", latitude);
     url.searchParams.append("longitude", longitude);
@@ -34,7 +32,7 @@ export const useGetReverseGeoCode = () => {
       .then((data) => {
         setreverseGeocode(data);
       });
-  }, [geoInformation?.coords, geoinfoLoading]);
+  }, [geoInformation, geoinfoLoading]);
 
   return { reverseGeocode };
 };
